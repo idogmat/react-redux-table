@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import './App.css';
 import NewForm from "./components/NewForm";
-import {LoadSome, LoadMore, filterColumn} from "./actions/actions";
+import {LoadSome, LoadMore, filterColumn,pushFormOnStore} from "./actions/actions";
 import CollapsibleTable from "./components/Forms";
 
 class App extends React.Component {
@@ -27,7 +27,7 @@ class App extends React.Component {
                         <button onClick={() => this.LoadSome()}>Some</button>
                         <button onClick={() => this.LoadMore()}>More</button>
                         <button onClick={() => this.setState({addNewForm: !this.state.addNewForm})}>addRow</button>
-                        {this.state.addNewForm ? <NewForm/> : ''}
+                        {this.state.addNewForm ? <NewForm pushFormOnStore={this.props.pushFormOnStore} forms={this.props.forms}/> : ''}
                     </div>
                     {/*<Table {...this.props}*/}
                     {/*       forms={this.props.forms}/>*/}
@@ -46,5 +46,5 @@ const mapStateToProps = (state) => ({
     sortRow: state.formReducer.sortRow,
 });
 export default connect(mapStateToProps, {
-    LoadSome, LoadMore, filterColumn
+    LoadSome, LoadMore, filterColumn,pushFormOnStore
 })(App);

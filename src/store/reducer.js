@@ -1,6 +1,7 @@
 const GET_SOME_FORMS = 'GET_SOME_FORMS';
 const FILTER_COLUMN = 'FILTER_COLUMN';
-const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
+const CREATE_NEW_FORM ='CREATE_NEW_FORM';
 let initialState = {
     formData:[],
     isFetching:false,
@@ -19,6 +20,11 @@ const formReducer = (state = initialState, action) => {
         }
         case TOGGLE_IS_FETCHING: {
             stateCopy.isFetching=action.isFetching
+            return stateCopy;
+
+        }
+        case CREATE_NEW_FORM: {
+            stateCopy.formData.unshift(action.newForm)
             return stateCopy;
 
         }
@@ -50,5 +56,8 @@ export const toggleIsFetching=(isFetching)=>{
 }
 export const filterElements=(column,sortRow)=>{
     return ({type: FILTER_COLUMN,column,sortRow})
+}
+export const createNewForm=(newForm)=>{
+    return ({type: CREATE_NEW_FORM,newForm})
 }
 export default formReducer;

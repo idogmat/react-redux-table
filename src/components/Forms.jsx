@@ -59,7 +59,7 @@ function Row(props) {
                                         <TableCell align="right">Индекс</TableCell>
                                     </TableRow>
                                 </TableHead>
-                                <TableBody>
+                          {row.address ? <TableBody>
                                         <TableRow key={row.id}>
                                             <TableCell component="th" scope="row">
                                                 {row.firstName}{row.secondName}
@@ -70,7 +70,7 @@ function Row(props) {
                                             <TableCell align="right">{row.address.state}</TableCell>
                                             <TableCell align="right">{row.address.zip}</TableCell>
                                         </TableRow>
-                                </TableBody>
+                                </TableBody> : ''}
                             </Table>
                         </Box>
                     </Collapse>
@@ -110,7 +110,7 @@ class CollapsibleTable extends React.Component{
                     </TableHead>
                     <TableBody>
                         {this.props.forms.slice(0,50).map((row) => {
-                            return <Row key={row.id+row.firstName} row={row}/>
+                            return <Row key={row.id+row.firstName+Math.random()} row={row}/>
                         })}
                     </TableBody>
                 </Table>

@@ -1,5 +1,5 @@
 import {LoadAPI} from "./api";
-import {filterElements, getSomeElements, toggleIsFetching} from "../store/reducer";
+import {filterElements, getSomeElements, toggleIsFetching,createNewForm} from "../store/reducer";
 
 export const LoadSome=()=>(dispatch)=>{
     dispatch(toggleIsFetching(true))
@@ -9,6 +9,9 @@ export const LoadSome=()=>(dispatch)=>{
             dispatch(getSomeElements(response))
         })
 
+}
+export const pushFormOnStore=(newForm)=>(dispatch)=>{
+    dispatch(createNewForm(newForm))
 }
 export const LoadMore=()=>(dispatch)=>{
     dispatch(toggleIsFetching(true))
