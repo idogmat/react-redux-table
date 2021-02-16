@@ -1,24 +1,19 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import MaskedInput from 'react-text-mask'
 
 class NewForm extends React.Component {
     componentDidMount() {
         // custom rule will have name 'isPasswordMatch'
-        // ValidatorForm.addValidationRule('isName', (value) => {
-        //     console.log((/^[A-Z][a-z]/).test(value))
-        //         if ((/^[A-Z][a-z]/).test(value) === true) {
-        //             return false;
-        //         }
-        //             return true;
-        // })
-
-        //     console.log(value !==/^[А-ЯЁ][а-яё]+$/)
-        //     if (value !== /^[A-Z][a-z]/) {
-        //         return false;
-        //     }
-        //         return true;
-        // });
+        ValidatorForm.addValidationRule('isName', (value) => {
+            let testName=(value)=> (/^[a-zA-Zа-яА-Я]+$/).test(value)
+            console.log(testName(value))
+                if (testName(value)) {
+                    return true;
+                }
+                    return false;
+        })
     }
     state = {
         id: '',
@@ -50,7 +45,10 @@ class NewForm extends React.Component {
         }
     }
     handleSubmit = () => {
-        // your submit logic
+        if(this.state.phone.length === 14){
+
+        }
+
     }
     render() {
         let { id,firstName,lastName,email,phone } = this.state;
@@ -96,15 +94,26 @@ class NewForm extends React.Component {
                     validators={['required', 'isEmail']}
                     errorMessages={['this field is required', 'email is not valid']}
                 />
-                <TextValidator
+                <MaskedInput
                     label="phone"
                     onChange={this.handleChange}
                     name="phone"
-                    type='phone'
+                    mask={['(', /[1-9]/, /\d/, /\d/, ')',/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
                     value={phone}
-                    validators={['required']}
-                    errorMessages={['this field is required', 'phone is not valid']}
-                />
+                    placeholder="(999)999-9999"
+                    >
+
+                </MaskedInput>
+                {/*<TextValidator*/}
+                {/*    label="phone"*/}
+                {/*    onChange={this.handleChange}*/}
+                {/*    name="phone"*/}
+                {/*    type='phone'*/}
+                {/*
+                {/*    value={phone}*/}
+                {/*    validators={['isPhone']}*/}
+                {/*    errorMessages={['this field is required', 'phone is not valid']}*/}
+                {/*/>*/}
                 <Button type="submit">Submit</Button>
             </ValidatorForm>
         );
