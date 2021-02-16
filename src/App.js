@@ -1,25 +1,50 @@
-import logo from './logo.svg';
+import React from 'react';
+import {connect} from "react-redux";
 import './App.css';
+import NewForm from "./components/NewForm";
+import {LoadSome, LoadMore, filterColumn} from "./actions/actions";
+import CollapsibleTable from "./components/Forms";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {addNewForm: false}
+    }
 
-export default App;
+    LoadSome() {
+        this.props.LoadSome()
+
+    }
+
+    LoadMore() {
+        this.props.LoadMore()
+    }
+
+    render() {
+        return (<>
+                <div className="App">
+                    <div>
+                        <button onClick={() => this.LoadSome()}>Some</button>
+                        <button onClick={() => this.LoadMore()}>More</button>
+                        <button onClick={() => this.setState({addNewForm: !this.state.addNewForm})}>addRow</button>
+                        {this.state.addNewForm ? <NewForm/> : ''}
+                    </div>
+                    {/*<Table {...this.props}*/}
+                    {/*       forms={this.props.forms}/>*/}
+                    {this.props.isFetching ? <div className="preloader"></div> : ""}
+                    {this.props.forms[0] ?
+                        <CollapsibleTable filterColumn={this.props.filterColumn} forms={this.props.forms} sortRow={this.props.sortRow}/>
+                        : ''}
+                </div>
+            </>
+        );
+    }
+};
+const mapStateToProps = (state) => ({
+    forms: state.formReducer.formData,
+    isFetching: state.formReducer.isFetching,
+    sortRow: state.formReducer.sortRow,
+});
+export default connect(mapStateToProps, {
+    LoadSome, LoadMore, filterColumn
+})(App);

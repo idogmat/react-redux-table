@@ -82,7 +82,7 @@ function Row(props) {
 class CollapsibleTable extends React.Component{
     constructor(props) {
         super(props);
-        this.state={sortRow:false}
+        this.state={sortRow:this.props.sortRow}
         this.state={formPage:(this.props.forms.length/50)}
 
     }
@@ -97,15 +97,15 @@ class CollapsibleTable extends React.Component{
                     <TableHead>
                         <TableRow>
                             <TableCell/>
-                            <TableCell onClick={() => this.clickOnColumnType({column: 'id'})}>id</TableCell>
+                            <TableCell onClick={() => this.clickOnColumnType({column: 'id'})}>id {!this.props.sortRow?'▲':'▼'}</TableCell>
                             <TableCell onClick={() => this.clickOnColumnType({column: 'firstName'})} align="right">First
-                                Name</TableCell>
+                                Name {!this.props.sortRow?'▲':'▼'}</TableCell>
                             <TableCell onClick={() => this.clickOnColumnType({column: 'secondName'})} align="right">Second
-                                Name</TableCell>
+                                Name {!this.props.sortRow?'▲':'▼'}</TableCell>
                             <TableCell onClick={() => this.clickOnColumnType({column: 'email'})}
-                                       align="right">Email</TableCell>
+                                       align="right">Email {!this.props.sortRow?'▲':'▼'}</TableCell>
                             <TableCell onClick={() => this.clickOnColumnType({column: 'phone'})}
-                                       align="right">Phone</TableCell>
+                                       align="right">Phone {!this.props.sortRow?'▲':'▼'}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
