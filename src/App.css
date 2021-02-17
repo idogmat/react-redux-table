@@ -53,3 +53,6 @@
   background-color: #FFF;
   background-position: center;
 }
+.MuiTableCell-head{
+  cursor: pointer;
+}

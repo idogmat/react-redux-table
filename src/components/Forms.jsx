@@ -82,16 +82,32 @@ function Row(props) {
 class CollapsibleTable extends React.Component{
     constructor(props) {
         super(props);
-        this.state={sortRow:this.props.sortRow}
-        this.state={formPage:(this.props.forms.length/50)}
+        this.state={
+        sortRow:this.props.sortRow,
+        totalPages:(this.props.forms.length/50),
+        currentPage:Number(1),
+        elementsOnPage:50
+        }
 
+    }
+    onPageChange(currentPage) {
+        this.setState({currentPage});
     }
     clickOnColumnType(type){
         this.setState({sortRow:!this.state.sortRow})
         this.props.filterColumn(type, {sortRow: this.state.sortRow})
     }
     render() {
+        const { currentPage,elementsOnPage } = this.state;
+        const indexOfLastTodo = currentPage * elementsOnPage;
+        const indexOfFirstTodo = indexOfLastTodo - elementsOnPage;
+        const currentElements = this.props.forms.slice(indexOfFirstTodo, indexOfLastTodo);
+        const pageNumbers = [];
+        for (let i = 1; i <= Math.ceil(this.props.forms.length / elementsOnPage); i++) {
+            pageNumbers.push(i);
+        }
         return (
+            <>
             <TableContainer component={Paper}>
                 <Table aria-label="collapsible table">
                     <TableHead>
@@ -109,12 +125,14 @@ class CollapsibleTable extends React.Component{
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {this.props.forms.slice(0,50).map((row) => {
+                        {currentElements.map((row) => {
                             return <Row key={row.id+row.firstName+Math.random()} row={row}/>
                         })}
                     </TableBody>
                 </Table>
             </TableContainer>
+                {pageNumbers.map(e=> <button onClick={()=>this.onPageChange(e)}>{e}</button>)}
+            </>
         );
     }
 }
