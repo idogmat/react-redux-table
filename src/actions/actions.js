@@ -7,7 +7,10 @@ export const LoadSome=()=>(dispatch)=>{
         .then(response => {
             dispatch(toggleIsFetching(false))
             dispatch(getSomeElements(response))
-        })
+        }).catch(e=> {
+       console.log(e)
+       dispatch(toggleIsFetching(false))
+   })
 
 }
 export const pushFormOnStore=(newForm)=>(dispatch)=>{
@@ -19,7 +22,10 @@ export const LoadMore=()=>(dispatch)=>{
         .then(response => {
             dispatch(toggleIsFetching(false))
             dispatch(getSomeElements(response))
-        })
+        }).catch(e=> {
+        console.log(e)
+        dispatch(toggleIsFetching(false))
+    })
 }
 export const addNewRow=()=>(dispatch)=>{
 
